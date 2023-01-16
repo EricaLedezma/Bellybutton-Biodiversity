@@ -1,9 +1,10 @@
 function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
-
+  
   // Use the list of sample names to populate the select options
   d3.json("samples_1.json").then((data) => {
+    console.log(data)
     var sampleNames = data.names;
 
     sampleNames.forEach((sample) => {
@@ -106,12 +107,29 @@ function buildCharts(sample) {
 
     // Deliverable 1: 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", data, barLayout);
-    // Deliverable 2: 1. Create the trace for the bubble chart.
-
-    // Deliverable 2: 2. Create the layout for the bubble chart.
-
-    // Deliverable 2: 3. Use Plotly to plot the data with the layout.
     
+    // Deliverable 2: 1. Create the trace for the bubble chart.
+    var trace = {
+      x: otuIds,
+      y: samples,
+      text: labels,
+      type: 'bubble',
+      mode: 'markers',
+      marker: {
+        size: samples,
+        color: otuIds,
+        colorscale: 'Portland'
+      },
+    };
+    var data_2 = [trace];
+    // Deliverable 2: 2. Create the layout for the bubble chart.
+    var bublayout = {
+      title: "Bacteria Cultures Per Sample",
+      showlegend: false,
+      xaxis: {title: "OTU IDs"},
+    }
+    // Deliverable 2: 3. Use Plotly to plot the data with the layout.
+    Plotly.newPlot("bubble", data_2, bublayout);
     // Deliverable 3: 4. Create the trace for the gauge chart.
     
     // Deliverable 3: 5. Create the layout for the gauge chart.
